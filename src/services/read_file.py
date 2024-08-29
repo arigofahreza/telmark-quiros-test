@@ -41,7 +41,6 @@ def processing_file():
     df_audio['Audio ID'] = df_audio['Audio ID'].astype(int)
     details_df = pd.merge(agg_df, df_audio, on='Audio ID')
 
-
     finals_df = pd.merge(df_customer, details_df, on='Customer ID')
     print(finals_df)
 
@@ -69,6 +68,5 @@ def aggregate_min_max(df_history):
     customer_login_times.columns = customer_login_times.columns.droplevel(0)
     customer_login_times = customer_login_times.reset_index()
     customer_login_times = customer_login_times.rename(columns={'': 'Total Duration'})
-
 
     return customer_login_times[['Customer ID', 'Total Duration']]
