@@ -7,8 +7,6 @@ from src.utils.generator import generate_subscription
 def processing_file():
     df_customer = pd.read_csv(
         'C:\\Users\\argfh\\PycharmProjects\\telmark-quiros-test\\src\\resource\\maven_music_customers.csv')
-    df_history = pd.read_excel(
-        'C:\\Users\\argfh\\PycharmProjects\\telmark-quiros-test\\src\\resource\\maven_music_listening_history.xlsx')
     df_customer['email_clean'] = df_customer['Email'].str.replace('Email: ', '')
     df_customer['Discount?'] = df_customer['Discount?'].fillna('No')
     df_customer['Subscription Plan'] = df_customer['Subscription Plan'].fillna('')
@@ -23,3 +21,12 @@ def processing_file():
     df_customer['formatted_cancellation_date'] = df_customer['Cancellation Date'].apply(
         lambda x: datetime.strptime(x, "%m/%d/%y").strftime("%Y-%m-%d") if x else '1900-01-01')
     print(df_customer.dtypes)
+
+
+def aggregate():
+    df_history = pd.read_excel(
+        'C:\\Users\\argfh\\PycharmProjects\\telmark-quiros-test\\src\\resource\\maven_music_listening_history.xlsx',
+        sheet_name='listening_history')
+    category_count = df_history.groupby(['Customer ID', 'Audio ID']).size().reset_index(name='Count')
+    most_played = category_count.loc[category_count.groupby('Customer ID')['Count'].idxmax()]
+    print(df_history)

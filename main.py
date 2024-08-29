@@ -1,4 +1,5 @@
-from src.services.read_file import processing_file
+from src.services.read_file import processing_file, aggregate
 
 if __name__ == '__main__':
-    processing_file()
+    # processing_file()
+    aggregate()
